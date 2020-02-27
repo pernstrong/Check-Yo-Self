@@ -1,0 +1,79 @@
+body {
+  margin: 0%;
+  background-color: #F3F6F7;
+
+}
+
+header {
+  border: 1px solid blue;
+  width: 100%;
+  height: 5%;
+  margin: 0%;
+  /* font??? */
+  font-family: "Open Sans", "ExtraBold 800";
+  background-color: #1F1F3D;
+}
+
+.title-white {
+  display: inline-block;
+  color: #FFFFFF;
+}
+
+.title-yellow {
+  display: inline-block;
+  color: #FFC30C;
+}
+
+.search-input {
+  float: right;
+}
+aside {
+  border: 1px solid green;
+  float: left;
+  width: 33%;
+  background-color: #587A8A;
+  /* height? better way to set than pixels??? */
+  height: 750px;
+}
+
+aside p {
+  margin: 5% 0% 2% 3%;
+  color: #FFFFFF;
+}
+
+aside input {
+  width: 90%;
+  /* height: 50%; */
+  font-size: 32px;
+  margin: 0% 5% 0% 3%;
+  border: 2px solid #1F1F3D;
+
+}
+aside button {
+  display: block;
+  background-color: #1F1F3D;
+  color: #FFFFFF;
+  border: #1F1F3D;
+}
+
+main {
+  columns: 2;
+}
+
+.column-one {
+  border: 1px solid pink;
+  height: 100%;
+  background-color: #F3F6F7;
+  /* height? better way to set than pixels??? */
+  height: 750px;
+
+}
+
+.column-two {
+  border: 1px solid red;
+  height: 100%;
+  background-color: #F3F6F7;
+  /* height? better way to set than pixels??? */
+  height: 750px;
+
+}
