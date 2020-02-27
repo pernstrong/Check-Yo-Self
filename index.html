@@ -8,13 +8,15 @@
 
 <body>
   <header>
+    <!-- <section class="title-text" -->
     <h1 class="title-white">CHECK</h1>
     <h1 class="title-yellow">YO'</h1>
     <h1 class="title-white">SELF</h1>
+    <!-- </section> -->
     <!-- image/button for search... HAVE MAG GLASS IN IMAGES!! input type image? -->
     <button class="search-button">
       <img src="assets/images/search.svg">
-      </button>
+    </button>
     <input type="text" placeholder="Search" class="search-input">
   </header>
 
@@ -28,6 +30,7 @@
       <p>Task Item</p>
       <input type="text" class="task-item-input">
       <!-- image/button to add task item... input type image? -->
+      <input type="image" class="add-task-item-button-image" src="assets/images/plus-sign.png">
       <button class="make-task-list-button">Make Task List</button>
       <button class="clear-all-button">Clear All</button>
     </section>
@@ -38,6 +41,28 @@
 
   <main>
     <section class="column-one">
+      <!-- adding to do card to get styling down -->
+      <!-- inactive -->
+      <div class="task-card">
+        <h4 class="task-card-title">Task Title</h4>
+        <ul class="task-card-list">
+          <li><input type="image" src="assets/images/checkbox.svg">Don't ever play yourself.</li>
+          <li><input type="image" src="assets/images/checkbox.svg">Every chance I get, I water the plants</li>
+          <li><input type="image" src="assets/images/checkbox.svg">Lion! Cloth talk</li>
+        </ul>
+        <section class="urgent-button-section">
+          <input type="image" src="assets/images/urgent.svg" class="task-card-urgent-button">
+          <p>URGENT</p>
+        </section>
+        <section class="delete-button-section">
+        <input type="image" src="assets/images/delete.svg" class="task-card-delete-button">
+        <p>DELETE</p>
+        </section>
+      </div>
+
+
+      <!-- active card -->
+
     </section>
     <section class="column-two">
     </section>
