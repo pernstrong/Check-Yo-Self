@@ -1,7 +1,8 @@
 console.log('task.js')
 
 class Task {
-  constructor() {
-
+  constructor(objective) {
+    this.objective = objective;
+    this.complete = false;
   }
 }
