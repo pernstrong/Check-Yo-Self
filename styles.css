@@ -14,9 +14,27 @@ header {
   background-color: #1F1F3D;
 }
 
+header input {
+  font-size: 32px;
+  /* padding: 1% 0%; */
+  margin: 1%;
+  width: 25%;
+}
+
+button {
+  cursor: pointer;
+}
+header button {
+  width: 3.70%;
+  position: absolute;
+  right: 26.3%;
+  top: 2.2%;
+}
+
 .title-white {
   display: inline-block;
   color: #FFFFFF;
+  font-size: 32px;
 }
 
 .title-yellow {
@@ -28,12 +46,13 @@ header {
   float: right;
 }
 aside {
-  border: 1px solid green;
+  /* border: 1px solid green; */
   float: left;
   width: 33%;
   background-color: #587A8A;
   /* height? better way to set than pixels??? */
   height: 750px;
+  border: 2px solid #3C6577;
 }
 
 aside p {
@@ -47,13 +66,27 @@ aside input {
   font-size: 32px;
   margin: 0% 5% 0% 3%;
   border: 2px solid #1F1F3D;
+}
 
+.task-item-input {
+  width: 80%;
 }
 aside button {
   display: block;
   background-color: #1F1F3D;
   color: #FFFFFF;
   border: #1F1F3D;
+  font-size: 24px;
+  width: 90%;
+  margin: 5% 5% 0% 3%;
+  border-radius: 5px;
+  padding: 1%;
+}
+
+.aside-bottom {
+  /* border: 1px solid purple; */
+  margin-top: 5%;
+  border-top: 2px solid #3C6577;
 }
 
 main {
