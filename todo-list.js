@@ -27,6 +27,5 @@ class ToDoList {
     // should update a task's content and if it has been completed
   }
   // makeNewTask() {
-  //
   // }
 }

@@ -6,5 +6,4 @@ class Task {
     this.objective = objective;
     this.complete = false;
   }
-  
 }
