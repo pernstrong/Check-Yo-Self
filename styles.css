@@ -119,7 +119,7 @@ main {
 }
 
 .column-one {
-  border: 1px solid pink;
+  /* border: 1px solid pink; */
   height: 100%;
   background-color: #F3F6F7;
   /* height? better way to set than pixels??? */
@@ -128,7 +128,7 @@ main {
 
 
 .column-two {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   height: 100%;
   background-color: #F3F6F7;
   /* height? better way to set than pixels??? */
