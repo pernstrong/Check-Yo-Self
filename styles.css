@@ -82,9 +82,40 @@ aside input {
   border: 2px solid #1F1F3D;
 }
 
-.task-item-input {
-  width: 80%;
+.aside-task-list-area input {
+width: 4%;
+margin-right: 3%;
+border: none;
 }
+
+.aside-task-list-area li {
+  list-style: none;
+  color: #FFFFFF;
+  font-size: 24px;
+  margin: 3% 5%;
+}
+
+.task-item-input-section {
+  width: 100%;
+  display: inline-flex;
+
+}
+
+.task-item-input {
+  width: 78%;
+  margin: 0% 0% 0% 3%;
+}
+
+.add-task-item-button-image {
+  width: 10%;
+  margin: 0%;
+}
+
+
+
+
+
+
 
 aside button {
   display: block;
@@ -98,7 +129,7 @@ aside button {
   padding: 1%;
 }
 
-.add-task-item-button-image {
+/* .add-task-item-button-image {
   width: 2.73%;
   padding: 0%;
   margin: 0%;
@@ -107,7 +138,7 @@ aside button {
   left: 27.95%;
   outline: none;
   cursor: pointer;
-}
+} */
 
 .aside-bottom {
   /* border: 1px solid purple; */
