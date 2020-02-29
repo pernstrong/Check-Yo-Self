@@ -98,7 +98,6 @@ border: none;
 .task-item-input-section {
   width: 100%;
   display: inline-flex;
-
 }
 
 .task-item-input {
@@ -110,11 +109,6 @@ border: none;
   width: 10%;
   margin: 0%;
 }
-
-
-
-
-
 
 
 aside button {

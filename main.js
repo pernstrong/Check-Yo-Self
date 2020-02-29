@@ -60,9 +60,6 @@ function displayTaskOnAside() {
     `<li data-linum="${[i]}"><input type="image" class="task-aside" src="assets/images/delete.svg" data-tasknum="${[i]}">${currentTasks[i].objective}</li>
     `)
   }
-  // asideTaskListArea.insertAdjacentHTML('beforeend',`
-  // <li><input type="image" class="task-aside" src="assets/images/delete.svg">${task.objective}</li>
-  // `)
 }
 
 
