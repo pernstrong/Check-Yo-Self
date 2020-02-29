@@ -13,11 +13,13 @@ aside.addEventListener('click', routeAsideFunctions)
 function routeAsideFunctions(event) {
   // console.log(event.target)
   if (event.target.classList.contains('add-task-item-button-image')) {
-    console.log('addTask!')
-    createTask();
+    // console.log('addTask!')
+    checkTaskInputValue()
+    // createTask();
   } else if (event.target.classList.contains('make-task-list-button')) {
     console.log('createNewTask!')
-    createToDoList()
+    // createToDoList()
+    checkTitleInputValue()
   } else if (event.target.classList.contains('clear-all-button')) {
     console.log('clearAll!')
     clearTasksOnAside(event)
@@ -28,6 +30,21 @@ function routeAsideFunctions(event) {
   }
   }
 
+  function checkTaskInputValue() {
+    if (taskItem.value === '') {
+      return
+    } else {
+      createTask()
+    }
+  }
+
+  function checkTitleInputValue() {
+    if ((toDoTitle.value === '') || (currentTasks.length == 0)) {
+      return
+    } else {
+      createToDoList()
+    }
+  }
 
 function createToDoList() {
   numberOfLists++
@@ -40,6 +57,7 @@ function createToDoList() {
   displayLists()
   toDoList.saveToStorage();
   toDoTitle.value = '';
+  currentTasks = []
 }
 
 function createTask() {
@@ -75,16 +93,13 @@ function deleteTaskOnAside(event) {
 }
 
 function clearTasksOnAside(event) {
+  // console.log(currentTasks)
+  asideTaskListArea = document.querySelector('.aside-task-list-area')
+  asideTaskListArea.innerHTML = '';
   toDoTitle.value = '';
   taskItem.value = '';
-  // console.log(currentTasks)
   currentTasks = [];
-  asideTaskListArea = document.querySelector('.aside-task-list-area')
   // console.log(currentTasks)
-  asideTaskListArea.innerHTML = '';
-  // console.log(currentTasks)
-
-
 }
 
 function displayLists() {
