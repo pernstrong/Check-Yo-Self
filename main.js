@@ -20,6 +20,7 @@ function routeAsideFunctions(event) {
     createToDoList()
   } else if (event.target.classList.contains('clear-all-button')) {
     console.log('clearAll!')
+    clearTasksOnAside(event)
     } else if (event.target.classList.contains('filter-by-urgency-button')) {
     console.log('filterByUrgency!')
   } else if (event.target.classList.contains('task-aside')) {
@@ -71,6 +72,19 @@ function deleteTaskOnAside(event) {
   currentTasks.splice(buttonSelectedIndex, 1)
   console.log(currentTasks)
   displayTaskOnAside()
+}
+
+function clearTasksOnAside(event) {
+  toDoTitle.value = '';
+  taskItem.value = '';
+  // console.log(currentTasks)
+  currentTasks = [];
+  asideTaskListArea = document.querySelector('.aside-task-list-area')
+  // console.log(currentTasks)
+  asideTaskListArea.innerHTML = '';
+  // console.log(currentTasks)
+
+
 }
 
 function displayLists() {
