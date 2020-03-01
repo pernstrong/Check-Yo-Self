@@ -115,16 +115,18 @@ function displayList(currentList, i) {
     columnTwo = document.querySelector('.column-two');
     noTaskMessage = document.querySelector('.no-task-message')
     var toDoList = currentList
+    console.log(allToDoLists.indexOf(currentList))
+    var indexOfList = allToDoLists.indexOf(currentList)
       // currentList  = allToDoLists[i];
       var targetColumn;
       // for (var i = 0; i < 1; i++) {
       if (allToDoLists.length > 0) {
         noTaskMessage.innerHTML = ''
       }
-      if ((allToDoLists.length % 2 === 0) || (i % 2 == 0)){
-        targetColumn = columnTwo;
-      } else {
+      if (indexOfList % 2 === 0){
         targetColumn = columnOne;
+      } else {
+        targetColumn = columnTwo;
       }
       targetColumn.insertAdjacentHTML('afterbegin',
       `<div class="task-card">
