@@ -169,10 +169,8 @@ main {
 }
 
 .task-card {
-  border-right: 1px solid #C7D3D8;
-  border-bottom: 1px solid #C7D3D8;
-  border-left: 1px solid #C7D3D8;
-  margin: 5%;
+  border: 2px solid #C7D3D8;
+  margin: 05%;
 }
 .task-card input {
   width: 4%;
@@ -186,15 +184,20 @@ main {
   /* list-style-image: url(assets/images/checkbox.svg) */
 }
 
+
 .task-card-title {
   color: #1F1F3D;
-  border: 1px solid #C7D3D8;
+  /* border-top: 2px solid #C7D3D8; */
+  /* border-bottom: 2px solid #C7D3D8; */
   font-size: 20px;
   padding: 0% 5%;
+  margin: 2% 0%;
 }
 
 .task-card-list {
-  border-bottom: 1px solid #C7D3D8;
+  border-bottom: 2px solid #C7D3D8;
+  border-top: 2px solid #C7D3D8;
+
 }
 
 .urgent-button-section {
@@ -202,6 +205,12 @@ main {
   width: 40%;
   margin: 0% 3%;
   display: inline-block;
+  color: #1F1F3D;
+}
+.task-card-list-active {
+  border-bottom: 2px solid #C7D3D8;
+  border-top: 2px solid #C7D3D8;
+
 }
 
 .task-card .task-card-urgent-button {
@@ -210,6 +219,22 @@ main {
   display: inline-block;
 }
 
+.urgent-card-active {
+  background-color: #FFE89D;
+  border: 2px solid #FFC30C
+}
+
+.task-card-list-active {
+  border-bottom: 2px solid #FFC30C;
+  border-top: 2px solid #FFC30C;
+}
+.urgent-button-section-active {
+  color: #B23A25;
+  display: inline-block;
+}
+/* img .urgent-button-section-active {
+  width: 100%;
+} */
 .task-card p {
   margin: 0%;
 }
@@ -219,6 +244,7 @@ main {
   width: 40%;
   text-align: right;
   margin: 0% 3%;
+  color: #1F1F3D;
   /* margin-left: */
   /* display: inline-block; */
 }

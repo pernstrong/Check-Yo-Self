@@ -27,15 +27,16 @@ class ToDoList {
         return
       }
     }
-    console.log(i)
+    // console.log(i)
     allToDoLists.splice(i, 1)
     deleteFromDom(i, selectedDiv)
     this.saveToStorage()
   }
-  updateToDo() {
+  updateToDo(selectedDiv) {
     // should update the todo's title and urgency
     // console.log(this.urgent)
     this.urgent = !this.urgent
+    updateDomUrgency(selectedDiv, this.id)
     // console.log(this.urgent)
     this.saveToStorage()
   }

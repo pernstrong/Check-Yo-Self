@@ -17,7 +17,7 @@ function routeAsideFunctions(event) {
   if (event.target.classList.contains('add-task-item-button-image')) {
     checkTaskInputValue()
   } else if (event.target.classList.contains('make-task-list-button')) {
-    console.log('createNewTask!')
+    // console.log('createNewTask!')
     checkTitleInputValue()
   } else if (event.target.classList.contains('clear-all-button')) {
     console.log('clearAll!')
@@ -46,7 +46,7 @@ function checkTitleInputValue() {
 }
 
 function routeListFunctions(event) {
-  console.log(event.target)
+  // console.log(event.target)
   if (event.target.classList.contains('task-input')) {
     findListToUpdateTaskComplete(event)
   } else if (event.target.classList.contains('task-card-urgent-button')) {
@@ -72,11 +72,11 @@ function routeListFunctions(event) {
 
 function findListToUpdateUrgency(event) {
   var taskId = event.target.dataset.id
-  // var selectedDiv = event.target.closest('.task-card')
+  var selectedDiv = event.target.closest('.task-card')
   // console.log(taskId)
   for (var i = 0; i < allToDoLists.length; i++) {
     if (taskId == allToDoLists[i].id) {
-      allToDoLists[i].updateToDo()
+      allToDoLists[i].updateToDo(selectedDiv)
     }
   }
 }
@@ -165,7 +165,9 @@ function displayList(currentList, i) {
         <ul class="task-card-list${toDoList.id} task-card-list" data-id="${toDoList.id}">
         </ul>
         <section class="urgent-button-section">
-          <input type="image" src="assets/images/urgent.svg" class="task-card-urgent-button" data-id="${toDoList.id}">
+          <input type="image" src="assets/images/urgent.svg" class="task-card-urgent-button task-card-urgent-button${toDoList.id}" data-id="${toDoList.id}">
+          <input type="image" src="assets/images/urgent-active.svg" class="task-card-urgent-button-active${toDoList.id} hide" data-id="${toDoList.id}">
+
           <p>URGENT</p>
         </section>
         <section class="delete-button-section">
@@ -238,7 +240,17 @@ function displayTasksFromStorage(currentList) {
 }
 
 function deleteFromDom(i, selectedDiv) {
-  console.log('deleteFromDom')
-  console.log(selectedDiv)
   selectedDiv.classList.add('hide')
+}
+
+function updateDomUrgency(selectedDiv, id) {
+  selectedDiv.classList.toggle('urgent-card-active')
+  var card = document.querySelector(`.task-card-list${id}`)
+  card.classList.toggle('task-card-list-active')
+  var buttonPic = document.querySelector(`.task-card-urgent-button${id}`)
+  if (buttonPic.getAttribute('src') == "assets/images/urgent.svg") {
+    buttonPic.src = "assets/images/urgent-active.svg";
+  } else {
+    buttonPic.src = "assets/images/urgent.svg"
+  }
 }
