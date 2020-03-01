@@ -22,51 +22,75 @@ function routeAsideFunctions(event) {
   } else if (event.target.classList.contains('clear-all-button')) {
     console.log('clearAll!')
     clearTasksOnAside(event)
-    } else if (event.target.classList.contains('filter-by-urgency-button')) {
+  } else if (event.target.classList.contains('filter-by-urgency-button')) {
     console.log('filterByUrgency!')
   } else if (event.target.classList.contains('task-aside')) {
     deleteTaskOnAside(event)
   }
-  }
-
-  function checkTaskInputValue() {
-    if (taskItem.value === '') {
-      return
-    } else {
-      createTask()
-    }
-  }
-
-  function checkTitleInputValue() {
-    if ((toDoTitle.value === '') || (currentTasks.length == 0)) {
-      return
-    } else {
-      createToDoList()
-    }
-  }
-
-function routeListFunctions(event) {
-  if (event.target.classList.contains('task-input')) {
-    // console.log('List!')
-    findListToUpdate(event)
-  }
-
 }
 
-function findListToUpdate(event) {
+function checkTaskInputValue() {
+  if (taskItem.value === '') {
+    return
+  } else {
+    createTask()
+  }
+}
+
+function checkTitleInputValue() {
+  if ((toDoTitle.value === '') || (currentTasks.length == 0)) {
+    return
+  } else {
+    createToDoList()
+  }
+}
+
+function routeListFunctions(event) {
+  console.log(event.target)
+  if (event.target.classList.contains('task-input')) {
+    findListToUpdateTaskComplete(event)
+  } else if (event.target.classList.contains('task-card-urgent-button')) {
+    findListToUpdateUrgency(event)
+  } else if (event.target.classList.contains('task-card-delete-button')) {
+    console.log('delete')
+    findListToDelete(event);
+  }
+  }
+
+  function findListToDelete(event) {
+    var taskId = event.target.dataset.id
+    // console.log(taskId)
+    for (var i = 0; i < allToDoLists.length; i++) {
+      if (taskId == allToDoLists[i].id) {
+        allToDoLists[i].deleteFromStorage(i)
+      }
+    }
+  }
+
+function findListToUpdateUrgency(event) {
+  var taskId = event.target.dataset.id
+  // console.log(taskId)
+  for (var i = 0; i < allToDoLists.length; i++) {
+    if (taskId == allToDoLists[i].id) {
+      allToDoLists[i].updateToDo()
+    }
+  }
+}
+
+function findListToUpdateTaskComplete(event) {
   var taskId = event.target.dataset.id
   var allTasks = event.target.closest('.task-card-list')
   var currentListToUpdateIndex;
   for (var i = 0; i < allToDoLists.length; i++) {
     if (allTasks.dataset.id == allToDoLists[i].id) {
       currentListToUpdateIndex = i
-      findListToUpdate(currentListToUpdateIndex, taskId)
+      findListInArrayToUpdate(currentListToUpdateIndex, taskId)
     }
   }
 
-  function findListToUpdate(currentListToUpdateIndex, taskId) {
+  function findListInArrayToUpdate(currentListToUpdateIndex, taskId) {
     currentListToUpdate = allToDoLists[currentListToUpdateIndex]
-    console.log(currentListToUpdate)
+    // console.log(currentListToUpdate)
     currentListToUpdate.updateTask(taskId)
   }
 }
@@ -96,7 +120,7 @@ function displayTaskOnAside() {
   asideTaskListArea.innerHTML = '';
   for (var i = 0; i < currentTasks.length; i++) {
     asideTaskListArea.insertAdjacentHTML('beforeend',
-    `<li data-linum="${[i]}"><input type="image" class="task-aside" src="assets/images/delete.svg"
+      `<li data-linum="${[i]}"><input type="image" class="task-aside" src="assets/images/delete.svg"
     data-id="${currentTasks[i].id}" data-tasknum="${[i]}">${currentTasks[i].objective}</li>
     `)
   }
@@ -117,52 +141,52 @@ function clearTasksOnAside(event) {
 }
 
 function displayList(currentList, i) {
-    columnOne = document.querySelector('.column-one');
-    columnTwo = document.querySelector('.column-two');
-    noTaskMessage = document.querySelector('.no-task-message')
-    var toDoList = currentList
-    var indexOfList = allToDoLists.indexOf(currentList)
-      var targetColumn;
-      if (allToDoLists.length > 0) {
-        noTaskMessage.innerHTML = ''
-      }
-      if (indexOfList % 2 === 0){
-        targetColumn = columnOne;
-      } else {
-        targetColumn = columnTwo;
-      }
-      targetColumn.insertAdjacentHTML('afterbegin',
-      `<div class="task-card">
+  columnOne = document.querySelector('.column-one');
+  columnTwo = document.querySelector('.column-two');
+  noTaskMessage = document.querySelector('.no-task-message')
+  var toDoList = currentList
+  var indexOfList = allToDoLists.indexOf(currentList)
+  var targetColumn;
+  if (allToDoLists.length > 0) {
+    noTaskMessage.innerHTML = ''
+  }
+  if (indexOfList % 2 === 0) {
+    targetColumn = columnOne;
+  } else {
+    targetColumn = columnTwo;
+  }
+  targetColumn.insertAdjacentHTML('afterbegin',
+    `<div class="task-card">
         <h4 class="task-card-title">${toDoList.title}</h4>
         <ul class="task-card-list${toDoList.id} task-card-list" data-id="${toDoList.id}">
         </ul>
         <section class="urgent-button-section">
-          <input type="image" src="assets/images/urgent.svg" class="task-card-urgent-button">
+          <input type="image" src="assets/images/urgent.svg" class="task-card-urgent-button" data-id="${toDoList.id}">
           <p>URGENT</p>
         </section>
         <section class="delete-button-section">
-        <input type="image" src="assets/images/delete.svg" class="task-card-delete-button">
+        <input type="image" src="assets/images/delete.svg" class="task-card-delete-button" data-id="${toDoList.id}">
         <p>DELETE</p>
         </section>
       </div>`
-    )
-    displayTasksInCards(currentList);
-  }
+  )
+  displayTasksInCards(currentList);
+}
 
 
-  function displayTasksInCards(currentList) {
-    taskCardList = document.querySelector(`.task-card-list${currentList.id}`)
-    taskCardList.innerHTML = ''
-    for (var i = 0; i < currentTasks.length; i++) {
-      var task = currentTasks[i]
-      taskCardList.insertAdjacentHTML('beforeend',
+function displayTasksInCards(currentList) {
+  taskCardList = document.querySelector(`.task-card-list${currentList.id}`)
+  taskCardList.innerHTML = ''
+  for (var i = 0; i < currentTasks.length; i++) {
+    var task = currentTasks[i]
+    taskCardList.insertAdjacentHTML('beforeend',
       `<li><input type="image" src="assets/images/checkbox.svg" class="task-input" data-id="${currentTasks[i].id}">${task.objective}</li>
       `
     )
     asideTaskListArea = document.querySelector('.aside-task-list-area')
     asideTaskListArea.innerHTML = ''
-    }
-    currentTasks = []
+  }
+  currentTasks = []
 }
 
 
@@ -170,17 +194,17 @@ function loadFromStorage() {
   // console.log(allToDoLists)
   var listsFromStorage = JSON.parse(localStorage.getItem('allToDoLists'))
   // allToDoLists = listsFromStorage
-  console.log(listsFromStorage)
+  // console.log(listsFromStorage)
   if (listsFromStorage === null) {
     return
   } else {
-  for (var i = 0; i < listsFromStorage.length; i++) {
-    var toDoList = new ToDoList(listsFromStorage[i].id, listsFromStorage[i].title, listsFromStorage[i].tasks);
-    console.log(toDoList)
-    allToDoLists.push(toDoList)
-    console.log(allToDoLists)
+    for (var i = 0; i < listsFromStorage.length; i++) {
+      var toDoList = new ToDoList(listsFromStorage[i].id, listsFromStorage[i].title, listsFromStorage[i].tasks, listsFromStorage[i].urgent);
+      // console.log(toDoList)
+      allToDoLists.push(toDoList)
+      // console.log(allToDoLists)
+    }
   }
-}
   if (allToDoLists === null) {
     allToDoLists = []
   }
@@ -195,16 +219,16 @@ function formatListsToDisplay() {
   }
 }
 
-function displayTasksFromStorage(currentList){
+function displayTasksFromStorage(currentList) {
   taskCardList = document.querySelector(`.task-card-list${currentList.id}`)
   taskCardList.innerHTML = ''
-    // taskIndArray = currentList.tasks
-    // taskIndArray = JSON.parse(currentList.tasks)
+  // taskIndArray = currentList.tasks
+  // taskIndArray = JSON.parse(currentList.tasks)
   for (var i = 0; i < currentList.tasks.length; i++) {
     var task = currentList.tasks[i]
     taskCardList.insertAdjacentHTML('beforeend',
-    `<li><input type="image" src="assets/images/checkbox.svg" data-id="${task.id}" class="task-input">${task.objective}</li>
+      `<li><input type="image" src="assets/images/checkbox.svg" data-id="${task.id}" class="task-input">${task.objective}</li>
     `
-  )
-}
+    )
+  }
 }
