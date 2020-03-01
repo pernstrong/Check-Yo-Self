@@ -59,16 +59,20 @@ function routeListFunctions(event) {
 
   function findListToDelete(event) {
     var taskId = event.target.dataset.id
+    var selectedDiv = event.target.closest('.task-card')
+    // console.log(selectedDiv)
     // console.log(taskId)
     for (var i = 0; i < allToDoLists.length; i++) {
       if (taskId == allToDoLists[i].id) {
-        allToDoLists[i].deleteFromStorage(i)
+        allToDoLists[i].deleteFromStorage(i, selectedDiv)
       }
     }
+
   }
 
 function findListToUpdateUrgency(event) {
   var taskId = event.target.dataset.id
+  // var selectedDiv = event.target.closest('.task-card')
   // console.log(taskId)
   for (var i = 0; i < allToDoLists.length; i++) {
     if (taskId == allToDoLists[i].id) {
@@ -231,4 +235,10 @@ function displayTasksFromStorage(currentList) {
     `
     )
   }
+}
+
+function deleteFromDom(i, selectedDiv) {
+  console.log('deleteFromDom')
+  console.log(selectedDiv)
+  selectedDiv.classList.add('hide')
 }

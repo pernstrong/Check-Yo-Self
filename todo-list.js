@@ -13,22 +13,15 @@ class ToDoList {
 
   saveToStorage() {
     // save to local storage
-    // console.log(this.tasks)
     localStorage.setItem('allToDoLists', JSON.stringify(allToDoLists))
-    // this.formatTasks()
   }
 
   formatTasks() {
     this.tasks = JSON.parse(this.tasks)
   }
 
-  // unformatTasks() {
-  //   this.tasks = JSON.stringify(this.tasks)
-  // }
-
-  deleteFromStorage(i) {
+  deleteFromStorage(i, selectedDiv) {
     // delete from local storage
-    console.log('delete from storage function')
     for (var y = 0; y < this.tasks.length; y++) {
       if (this.tasks[y].complete == false) {
         return
@@ -36,16 +29,14 @@ class ToDoList {
     }
     console.log(i)
     allToDoLists.splice(i, 1)
+    deleteFromDom(i, selectedDiv)
     this.saveToStorage()
-    // loadFromStorage()
   }
   updateToDo() {
     // should update the todo's title and urgency
-    // URGENCY!
-    // console.log('update to do!!!')
-    console.log(this.urgent)
+    // console.log(this.urgent)
     this.urgent = !this.urgent
-    console.log(this.urgent)
+    // console.log(this.urgent)
     this.saveToStorage()
   }
 
