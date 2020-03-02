@@ -4,14 +4,17 @@ var toDoTitle = document.querySelector('.task-title-input')
 var taskItem = document.querySelector('.task-item-input')
 var aside = document.querySelector('.aside')
 var main = document.querySelector('.main')
+var search = document.querySelector('.search-input')
 var numberOfLists = -1;
 var numberOfTasks = -1;
 var currentTasks = [];
 var allToDoLists = [];
+var searchLists = [];
 
 window.addEventListener('load', loadFromStorage)
 aside.addEventListener('click', routeAsideFunctions)
 main.addEventListener('click', routeListFunctions)
+search.addEventListener('keyup', searchTitles)
 
 function routeAsideFunctions(event) {
   if (event.target.classList.contains('add-task-item-button-image')) {
@@ -52,7 +55,7 @@ function routeListFunctions(event) {
   } else if (event.target.classList.contains('task-card-urgent-button')) {
     findListToUpdateUrgency(event)
   } else if (event.target.classList.contains('task-card-delete-button')) {
-    console.log('delete')
+    // console.log('delete')
     findListToDelete(event);
   }
   }
@@ -162,7 +165,7 @@ function displayList(currentList, i) {
   }
   if (toDoList.urgent === false) {
   targetColumn.insertAdjacentHTML('afterbegin',
-    `<div class="task-card">
+    `<div class="task-card task-card-id${toDoList.id}">
         <h4 class="task-card-title">${toDoList.title}</h4>
         <ul class="task-card-list${toDoList.id} task-card-list" data-id="${toDoList.id}">
         </ul>
@@ -177,7 +180,7 @@ function displayList(currentList, i) {
       </div>`
   )} else {
     targetColumn.insertAdjacentHTML('afterbegin',
-      `<div class="task-card urgent-card-active">
+      `<div class="task-card task-card-id${toDoList.id} urgent-card-active">
           <h4 class="task-card-title">${toDoList.title}</h4>
           <ul class="task-card-list${toDoList.id} task-card-list task-card-list-active" data-id="${toDoList.id}">
           </ul>
@@ -248,7 +251,7 @@ function displayTasksFromStorage(currentList) {
   // taskIndArray = JSON.parse(currentList.tasks)
   for (var i = 0; i < currentList.tasks.length; i++) {
     var task = currentList.tasks[i]
-    console.log(task)
+    // console.log(task)
     if (task.complete === true) {
       taskCardList.insertAdjacentHTML('beforeend',
       `<li class="list-item list-item-active"><input type="image" src="assets/images/checkbox-active.svg" data-id="${task.id}" class="task-input task-input${task.id}">${task.objective}</li>
@@ -287,16 +290,86 @@ function updateDomUrgency(selectedDiv, id) {
 }
 
 function updateDomTaskComplete(taskId, selectedDiv) {
-  console.log('update dom!')
-  console.log(selectedDiv)
+  // console.log('update dom!')
+  // console.log(selectedDiv)
   var taskButton = document.querySelector(`.task-input${taskId}`)
-  console.log(taskButton)
+  // console.log(taskButton)
   if (taskButton.getAttribute('src') == "assets/images/checkbox.svg") {
     taskButton.src = "assets/images/checkbox-active.svg"
   } else {
     taskButton.src = "assets/images/checkbox.svg"
   }
   var listItem = taskButton.closest('.list-item')
-  console.log(listItem)
+  // console.log(listItem)
   listItem.classList.toggle('list-item-active')
 }
+
+function searchTitles() {
+  // console.log('search!')
+  // console.log(allToDoLists)
+  // debugger
+  searchInput = search.value
+  // console.log(searchInput.length)
+  for (var i = 0; i < allToDoLists.length; i++) {
+    var currentTitle = allToDoLists[i].title
+     if (searchInput === '') {
+       removeAllHides()
+      // loadFromStorage()
+    } else {
+      searchTitlesByLetter(currentTitle, searchInput, allToDoLists[i])
+  }
+  // console.log(searchInput)
+}
+}
+
+function removeAllHides() {
+  // console.log('remove!')
+  for (var i = 0; i < allToDoLists.length; i++) {
+    var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
+    currentDiv.classList.remove('hide')
+  }
+}
+
+function searchTitlesByLetter(currentTitle, searchInput, currentList) {
+  for (var i = 0; i < searchInput.length + 1; i++) {
+    var currentDiv = document.querySelector(`.task-card-id${currentList.id}`)
+    // console.log(currentTitle)
+    // console.log(searchInput[i-1])
+    // console.log(currentTitle[i-1])
+     if (searchInput[i-1] == currentTitle[i-1]) {
+      currentDiv.classList.remove('hide')
+    } else {
+      currentDiv.classList.add('hide')
+      // formatListsToDisplay()
+    }
+  }
+  // loadFromStorage()
+}
+//
+// function reDisplayLists() {
+//   // main.innerHTML = ''
+//   console.log(allToDoLists)
+//   for (var i = 0; i < allToDoLists.length; i++) {
+//     displayList(allToDoLists[i])
+//   }
+// }
+
+
+// function searchTitlesByLetter(currentTitle, searchInput, currentList) {
+//   for (var i = 0; i < searchInput.length; i++) {
+//     if (searchInput[i] == currentTitle[i]) {
+//       console.log(currentList)
+//       searchLists.push(currentList)
+//       main.innerHTML = ''
+//       displaySearchLists(searchLists)
+//     }
+//     console.log(searchLists)
+//   }
+//   searchLists = [];
+// }
+//
+// function displaySearchLists(searchLists) {
+//   for (var i = 0; i < searchLists.length; i++) {
+//     display(searchLists[i])
+//   }
+// }
