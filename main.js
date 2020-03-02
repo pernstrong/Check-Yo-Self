@@ -84,18 +84,19 @@ function findListToUpdateUrgency(event) {
 function findListToUpdateTaskComplete(event) {
   var taskId = event.target.dataset.id
   var allTasks = event.target.closest('.task-card-list')
+  var selectedDiv = event.target.closest('.task-card')
   var currentListToUpdateIndex;
   for (var i = 0; i < allToDoLists.length; i++) {
     if (allTasks.dataset.id == allToDoLists[i].id) {
       currentListToUpdateIndex = i
-      findListInArrayToUpdate(currentListToUpdateIndex, taskId)
+      findListInArrayToUpdate(currentListToUpdateIndex, taskId, selectedDiv)
     }
   }
 
-  function findListInArrayToUpdate(currentListToUpdateIndex, taskId) {
+  function findListInArrayToUpdate(currentListToUpdateIndex, taskId, selectedDiv) {
     currentListToUpdate = allToDoLists[currentListToUpdateIndex]
     // console.log(currentListToUpdate)
-    currentListToUpdate.updateTask(taskId)
+    currentListToUpdate.updateTask(taskId, selectedDiv)
   }
 }
 
@@ -159,6 +160,7 @@ function displayList(currentList, i) {
   } else {
     targetColumn = columnTwo;
   }
+  if (toDoList.urgent === false) {
   targetColumn.insertAdjacentHTML('afterbegin',
     `<div class="task-card">
         <h4 class="task-card-title">${toDoList.title}</h4>
@@ -166,8 +168,6 @@ function displayList(currentList, i) {
         </ul>
         <section class="urgent-button-section">
           <input type="image" src="assets/images/urgent.svg" class="task-card-urgent-button task-card-urgent-button${toDoList.id}" data-id="${toDoList.id}">
-          <input type="image" src="assets/images/urgent-active.svg" class="task-card-urgent-button-active${toDoList.id} hide" data-id="${toDoList.id}">
-
           <p>URGENT</p>
         </section>
         <section class="delete-button-section">
@@ -175,7 +175,23 @@ function displayList(currentList, i) {
         <p>DELETE</p>
         </section>
       </div>`
-  )
+  )} else {
+    targetColumn.insertAdjacentHTML('afterbegin',
+      `<div class="task-card urgent-card-active">
+          <h4 class="task-card-title">${toDoList.title}</h4>
+          <ul class="task-card-list${toDoList.id} task-card-list task-card-list-active" data-id="${toDoList.id}">
+          </ul>
+          <section class="urgent-button-section">
+            <input type="image" src="assets/images/urgent-active.svg" class="task-card-urgent-button task-card-urgent-button${toDoList.id}" data-id="${toDoList.id}">
+            <p>URGENT</p>
+          </section>
+          <section class="delete-button-section">
+          <input type="image" src="assets/images/delete.svg" class="task-card-delete-button" data-id="${toDoList.id}">
+          <p>DELETE</p>
+          </section>
+        </div>`
+)
+  }
   displayTasksInCards(currentList);
 }
 
@@ -186,7 +202,7 @@ function displayTasksInCards(currentList) {
   for (var i = 0; i < currentTasks.length; i++) {
     var task = currentTasks[i]
     taskCardList.insertAdjacentHTML('beforeend',
-      `<li><input type="image" src="assets/images/checkbox.svg" class="task-input" data-id="${currentTasks[i].id}">${task.objective}</li>
+      `<li class="list-item"><input type="image" src="assets/images/checkbox.svg" class="task-input task-input${currentTasks[i].id}" data-id="${currentTasks[i].id}">${task.objective}</li>
       `
     )
     asideTaskListArea = document.querySelector('.aside-task-list-area')
@@ -232,12 +248,27 @@ function displayTasksFromStorage(currentList) {
   // taskIndArray = JSON.parse(currentList.tasks)
   for (var i = 0; i < currentList.tasks.length; i++) {
     var task = currentList.tasks[i]
+    console.log(task)
+    if (task.complete === true) {
+      taskCardList.insertAdjacentHTML('beforeend',
+      `<li class="list-item list-item-active"><input type="image" src="assets/images/checkbox-active.svg" data-id="${task.id}" class="task-input task-input${task.id}">${task.objective}</li>
+      `
+    )
+    } else {
     taskCardList.insertAdjacentHTML('beforeend',
-      `<li><input type="image" src="assets/images/checkbox.svg" data-id="${task.id}" class="task-input">${task.objective}</li>
+      `<li class="list-item"><input type="image" src="assets/images/checkbox.svg" data-id="${task.id}" class="task-input task-input${task.id}">${task.objective}</li>
     `
     )
+    // markTasksCompleteFromStorage(task)
   }
 }
+}
+
+// function markTasksCompleteFromStorage(task) {
+//   if (task.complete == true) {
+//
+//   }
+// }
 
 function deleteFromDom(i, selectedDiv) {
   selectedDiv.classList.add('hide')
@@ -253,4 +284,19 @@ function updateDomUrgency(selectedDiv, id) {
   } else {
     buttonPic.src = "assets/images/urgent.svg"
   }
+}
+
+function updateDomTaskComplete(taskId, selectedDiv) {
+  console.log('update dom!')
+  console.log(selectedDiv)
+  var taskButton = document.querySelector(`.task-input${taskId}`)
+  console.log(taskButton)
+  if (taskButton.getAttribute('src') == "assets/images/checkbox.svg") {
+    taskButton.src = "assets/images/checkbox-active.svg"
+  } else {
+    taskButton.src = "assets/images/checkbox.svg"
+  }
+  var listItem = taskButton.closest('.list-item')
+  console.log(listItem)
+  listItem.classList.toggle('list-item-active')
 }

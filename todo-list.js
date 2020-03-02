@@ -41,7 +41,7 @@ class ToDoList {
     this.saveToStorage()
   }
 
-  updateTask(taskId) {
+  updateTask(taskId, selectedDiv) {
     // updates the task completed or not.
     var idIndex;
     for (var i = 0; i < this.tasks.length; i++) {
@@ -51,6 +51,8 @@ class ToDoList {
         // console.log(this.tasks[i].complete)
       }
     }
+    // console.log(taskId)
+    updateDomTaskComplete(taskId, selectedDiv)
     this.saveToStorage();
   }
 

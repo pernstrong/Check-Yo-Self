@@ -153,6 +153,10 @@ main {
   padding-top: 1%;
 }
 
+.no-task-message {
+  margin: 10% 0% 0% 5%;
+  color: #1F1F3D;
+}
 
 .column-two {
   /* border: 1px solid red; */
@@ -176,15 +180,18 @@ main {
   width: 4%;
   margin-right: 3%;
 }
-.task-card li {
+/* .task-card-list li {
   margin: 5% 0%;
   font-size: 18px;
   color: #1F1F3D;
   list-style: none;
   /* list-style-image: url(assets/images/checkbox.svg) */
+/* } */ */
+
+.task-input-active {
+  color: #3C6577;
+
 }
-
-
 .task-card-title {
   color: #1F1F3D;
   /* border-top: 2px solid #C7D3D8; */
@@ -254,4 +261,19 @@ main {
   /* float: right; */
   margin: 0% 10%;
   display: inline-block;
+}
+
+.list-item {
+  margin: 5% 0%;
+  font-size: 18px;
+  color: #1F1F3D;
+  list-style: none;
+}
+.list-item-active {
+  margin: 5% 0%;
+  font-size: 18px;
+  color: #3C6577;
+  font-style: italic;
+  list-style: none;
+  /* list-style-image: url(assets/images/checkbox.svg) */
 }
