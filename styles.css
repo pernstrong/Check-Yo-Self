@@ -153,6 +153,10 @@ main {
   padding-top: 1%;
 }
 
+.no-task-message {
+  margin: 10% 0% 0% 5%;
+  color: #1F1F3D;
+}
 
 .column-two {
   /* border: 1px solid red; */
@@ -169,32 +173,38 @@ main {
 }
 
 .task-card {
-  border-right: 1px solid #C7D3D8;
-  border-bottom: 1px solid #C7D3D8;
-  border-left: 1px solid #C7D3D8;
-  margin: 5%;
+  border: 2px solid #C7D3D8;
+  margin: 05%;
 }
 .task-card input {
   width: 4%;
   margin-right: 3%;
 }
-.task-card li {
+/* .task-card-list li {
   margin: 5% 0%;
   font-size: 18px;
   color: #1F1F3D;
   list-style: none;
   /* list-style-image: url(assets/images/checkbox.svg) */
-}
+/* } */ */
 
+.task-input-active {
+  color: #3C6577;
+
+}
 .task-card-title {
   color: #1F1F3D;
-  border: 1px solid #C7D3D8;
+  /* border-top: 2px solid #C7D3D8; */
+  /* border-bottom: 2px solid #C7D3D8; */
   font-size: 20px;
   padding: 0% 5%;
+  margin: 2% 0%;
 }
 
 .task-card-list {
-  border-bottom: 1px solid #C7D3D8;
+  border-bottom: 2px solid #C7D3D8;
+  border-top: 2px solid #C7D3D8;
+
 }
 
 .urgent-button-section {
@@ -202,6 +212,12 @@ main {
   width: 40%;
   margin: 0% 3%;
   display: inline-block;
+  color: #1F1F3D;
+}
+.task-card-list-active {
+  border-bottom: 2px solid #C7D3D8;
+  border-top: 2px solid #C7D3D8;
+
 }
 
 .task-card .task-card-urgent-button {
@@ -210,6 +226,22 @@ main {
   display: inline-block;
 }
 
+.urgent-card-active {
+  background-color: #FFE89D;
+  border: 2px solid #FFC30C
+}
+
+.task-card-list-active {
+  border-bottom: 2px solid #FFC30C;
+  border-top: 2px solid #FFC30C;
+}
+.urgent-button-section-active {
+  color: #B23A25;
+  display: inline-block;
+}
+/* img .urgent-button-section-active {
+  width: 100%;
+} */
 .task-card p {
   margin: 0%;
 }
@@ -219,6 +251,7 @@ main {
   width: 40%;
   text-align: right;
   margin: 0% 3%;
+  color: #1F1F3D;
   /* margin-left: */
   /* display: inline-block; */
 }
@@ -228,4 +261,19 @@ main {
   /* float: right; */
   margin: 0% 10%;
   display: inline-block;
+}
+
+.list-item {
+  margin: 5% 0%;
+  font-size: 18px;
+  color: #1F1F3D;
+  list-style: none;
+}
+.list-item-active {
+  margin: 5% 0%;
+  font-size: 18px;
+  color: #3C6577;
+  font-style: italic;
+  list-style: none;
+  /* list-style-image: url(assets/images/checkbox.svg) */
 }
