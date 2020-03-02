@@ -140,6 +140,12 @@ aside button {
   border-top: 2px solid #3C6577;
 }
 
+.filter-by-urgency-button-active {
+  background-color: #EF4A23;
+  border: 2px solid #782616;
+  color: #FFF;
+}
+
 main {
   columns: 2;
 }

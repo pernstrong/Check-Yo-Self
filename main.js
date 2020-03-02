@@ -23,10 +23,11 @@ function routeAsideFunctions(event) {
     // console.log('createNewTask!')
     checkTitleInputValue()
   } else if (event.target.classList.contains('clear-all-button')) {
-    console.log('clearAll!')
+    // console.log('clearAll!')
     clearTasksOnAside(event)
   } else if (event.target.classList.contains('filter-by-urgency-button')) {
     console.log('filterByUrgency!')
+    filterByUrgency()
   } else if (event.target.classList.contains('task-aside')) {
     deleteTaskOnAside(event)
   }
@@ -308,11 +309,18 @@ function searchTitles() {
   // console.log('search!')
   // console.log(allToDoLists)
   // debugger
+
   searchInput = search.value
   // console.log(searchInput.length)
+  var urgentButton = document.querySelector('.filter-by-urgency-button')
+
   for (var i = 0; i < allToDoLists.length; i++) {
+    var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
     var currentTitle = allToDoLists[i].title
-     if (searchInput === '') {
+    console.log(allToDoLists[i].urgent)
+    if ((searchInput == '') && (allToDoLists[i].urgent === false) && (urgentButton.classList.contains('filter-by-urgency-button-active'))) {
+      currentDiv.classList.add('hide')
+    } else if (searchInput === '') {
        removeAllHides()
       // loadFromStorage()
     } else {
@@ -332,11 +340,14 @@ function removeAllHides() {
 
 function searchTitlesByLetter(currentTitle, searchInput, currentList) {
   for (var i = 0; i < searchInput.length + 1; i++) {
+    var urgentButton = document.querySelector('.filter-by-urgency-button')
     var currentDiv = document.querySelector(`.task-card-id${currentList.id}`)
     // console.log(currentTitle)
     // console.log(searchInput[i-1])
     // console.log(currentTitle[i-1])
-     if (searchInput[i-1] == currentTitle[i-1]) {
+    if (urgentButton.classList.contains('filter-by-urgency-button-active')) {
+      searchByUrgency(currentTitle, searchInput, currentList)
+    } else if (searchInput[i-1] == currentTitle[i-1]) {
       currentDiv.classList.remove('hide')
     } else {
       currentDiv.classList.add('hide')
@@ -345,6 +356,70 @@ function searchTitlesByLetter(currentTitle, searchInput, currentList) {
   }
   // loadFromStorage()
 }
+
+
+function filterByUrgency() {
+  console.log(allToDoLists)
+  var noUrgentMessage = document.querySelector('.no-urgent-message')
+  noUrgentMessage.classList.add('hide')
+  var urgentButton = document.querySelector('.filter-by-urgency-button')
+  urgentButton.classList.toggle('filter-by-urgency-button-active')
+  var allToDoListsFalseCounter = 0;
+  for (var i = 0; i < allToDoLists.length; i++) {
+    var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
+    if ((allToDoLists[i].urgent == false) && (urgentButton.classList.contains('filter-by-urgency-button-active'))) {
+      allToDoListsFalseCounter++;
+      currentDiv.classList.add('hide')
+    } else if ((allToDoLists[i].urgent == false) && (urgentButton.classList.contains('filter-by-urgency-button'))) {
+      currentDiv.classList.remove('hide')
+    }
+  }
+  console.log(allToDoListsFalseCounter)
+  if (allToDoListsFalseCounter === allToDoLists.length) {
+    displayNothingUrgentMessage()
+  }
+}
+
+function searchByUrgency(currentTitle, searchInput, currentList) {
+  // var urgentButton = document.querySelector('.filter-by-urgency-button')
+  // if (urgentButton.classList.contains('filter-by-urgency-button-active')) {
+      for (var i = 0; i < searchInput.length + 1; i++) {
+        var currentDiv = document.querySelector(`.task-card-id${currentList.id}`)
+        if (currentList.urgent === false) {
+          console.log('dont search me')
+        } else if (searchInput[i-1] == currentTitle[i-1]) {
+          currentDiv.classList.remove('hide')
+        } else {
+          currentDiv.classList.add('hide')
+          // formatListsToDisplay()
+        }
+      }
+      // loadFromStorage()
+    }
+
+
+
+function displayNothingUrgentMessage() {
+  console.log('no urgency!')
+  var noUrgentMessage = document.querySelector('.no-urgent-message')
+  noUrgentMessage.classList.remove('hide')
+}
+
+
+
+// function filterByUrgency() {
+//   console.log(allToDoLists)
+//   var urgentButton = document.querySelector('.filter-by-urgency-button')
+//   urgentButton.classList.toggle('filter-by-urgency-button-active')
+//   var allToDoListsFalseCounter = 0;
+//   for (var i = 0; i < allToDoLists.length; i++) {
+//     allToDoListsFalseCounter++;
+//     var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
+//     if (allToDoLists[i].urgent == false) {
+//       currentDiv.classList.toggle('hide')
+//     }
+//   }
+// }
 //
 // function reDisplayLists() {
 //   // main.innerHTML = ''
