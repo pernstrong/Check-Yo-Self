@@ -293,10 +293,10 @@ function searchTitles() {
   for (var i = 0; i < allToDoLists.length; i++) {
     var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
     var currentTitle = allToDoLists[i].title
-    console.log(allToDoLists[i].urgent)
-    if ((searchInput == '') && (allToDoLists[i].urgent === false) && (urgentButton.classList.contains('filter-by-urgency-button-active'))) {
-      currentDiv.classList.add('hide')
-    } else if (searchInput === '') {
+
+    if ((searchInput == '')  && (urgentButton.classList.contains('filter-by-urgency-button-active'))) {
+      removeUnurgentHides()
+    } else if (searchInput == '') {
       removeAllHides()
     } else {
       searchTitlesByLetter(currentTitle, searchInput, allToDoLists[i])
@@ -305,63 +305,154 @@ function searchTitles() {
 }
 
 function searchTitlesByLetter(currentTitle, searchInput, currentList) {
-  for (var i = 0; i < searchInput.length + 1; i++) {
+  for (var i = 0; i < searchInput.length; i++) {
     var urgentButton = document.querySelector('.filter-by-urgency-button')
     var currentDiv = document.querySelector(`.task-card-id${currentList.id}`)
     if (urgentButton.classList.contains('filter-by-urgency-button-active')) {
+
       searchByUrgency(currentTitle, searchInput, currentList)
-    } else if (searchInput[i - 1] == currentTitle[i - 1]) {
+
+    } else if (currentTitle.includes(searchInput)) {
       currentDiv.classList.remove('hide')
     } else {
       currentDiv.classList.add('hide')
     }
-  }
-}
-
-function removeAllHides() {
-  for (var i = 0; i < allToDoLists.length; i++) {
-    var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
-    currentDiv.classList.remove('hide')
-  }
-}
-
-function filterByUrgency() {
-  console.log(allToDoLists)
-  var noUrgentMessage = document.querySelector('.no-urgent-message')
-  noUrgentMessage.classList.add('hide')
-  var urgentButton = document.querySelector('.filter-by-urgency-button')
-  urgentButton.classList.toggle('filter-by-urgency-button-active')
-  var allToDoListsFalseCounter = 0;
-  for (var i = 0; i < allToDoLists.length; i++) {
-    var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
-    if ((allToDoLists[i].urgent == false) && (urgentButton.classList.contains('filter-by-urgency-button-active'))) {
-      allToDoListsFalseCounter++;
-      currentDiv.classList.add('hide')
-    } else if ((allToDoLists[i].urgent == false) && (urgentButton.classList.contains('filter-by-urgency-button'))) {
-      currentDiv.classList.remove('hide')
-    }
-  }
-  console.log(allToDoListsFalseCounter)
-  if (allToDoListsFalseCounter === allToDoLists.length) {
-    displayNothingUrgentMessage()
   }
 }
 
 function searchByUrgency(currentTitle, searchInput, currentList) {
-  for (var i = 0; i < searchInput.length + 1; i++) {
+  for (var i = 0; i < searchInput.length; i++) {
     var currentDiv = document.querySelector(`.task-card-id${currentList.id}`)
-    if (currentList.urgent === false) {
-      console.log('dont search me')
-    } else if (searchInput[i - 1] == currentTitle[i - 1]) {
+    if (currentList.urgent == false) {
+    } else if (currentTitle.includes(searchInput)) {
       currentDiv.classList.remove('hide')
+}else if ((searchInput = '') && (currentList.urgency == false)) {
+        currentDiv.classList.add('hide')
+
     } else {
       currentDiv.classList.add('hide')
+
     }
   }
 }
 
-function displayNothingUrgentMessage() {
-  console.log('no urgency!')
-  var noUrgentMessage = document.querySelector('.no-urgent-message')
-  noUrgentMessage.classList.remove('hide')
-}
+  function removeAllHides() {
+    for (var i = 0; i < allToDoLists.length; i++) {
+      var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
+      currentDiv.classList.remove('hide')
+    }
+  }
+
+  function removeUnurgentHides() {
+    for (var i = 0; i < allToDoLists.length; i++) {
+      var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
+      if (allToDoLists[i].urgent == true) {
+      currentDiv.classList.remove('hide')
+    } else if (allToDoLists[i].urgent == false) {
+      currentDiv.classList.add('hide')
+    }
+    }
+  }
+// function searchTitles() {
+//   searchInput = search.value
+//   var urgentButton = document.querySelector('.filter-by-urgency-button')
+//   for (var i = 0; i < allToDoLists.length; i++) {
+//     var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
+//     var currentTitle = allToDoLists[i].title
+//     // console.log(allToDoLists[i])
+//     // console.log(currentDiv)
+//     if ((searchInput == '') && (allToDoLists[i].urgent == false) && (urgentButton.classList.contains('filter-by-urgency-button-active'))) {
+//       currentDiv.classList.add('hide')
+//     } else if (searchInput == '') {
+//       removeAllHides()
+//     } else {
+//       searchTitlesByLetter(currentTitle, searchInput, allToDoLists[i])
+//     }
+//   }
+// }
+
+// function searchTitlesByLetter(currentTitle, searchInput, currentList) {
+//   if (searchInput.length < 2) {
+//   for (var i = 0; i < searchInput.length + 1; i++) {
+//     console.log(i)
+//     var urgentButton = document.querySelector('.filter-by-urgency-button')
+//     var currentDiv = document.querySelector(`.task-card-id${currentList.id}`)
+//     if (urgentButton.classList.contains('filter-by-urgency-button-active')) {
+//       searchByUrgency(currentTitle, searchInput, currentList)
+//     } else if (searchInput[i - 1] == currentTitle[i - 1]) {
+//       currentDiv.classList.remove('hide')
+//     } else {
+//       currentDiv.classList.add('hide')
+//     }
+//   }
+// } else if (searchInput.length > 2) {
+//   for (var i = 0; i < searchInput.length + 1; i++) {
+//
+//     var urgentButton = document.querySelector('.filter-by-urgency-button')
+//     var currentDiv = document.querySelector(`.task-card-id${currentList.id}`)
+//     if (urgentButton.classList.contains('filter-by-urgency-button-active')) {
+//       searchByUrgency(currentTitle, searchInput, currentList)
+//     } else if ((searchInput[i] == currentTitle[i]) && (searchInput[i + 1] == currentTitle[i + 1])) {
+//       currentDiv.classList.remove('hide')
+//     } else {
+//       currentDiv.classList.add('hide')
+//     }
+//   }
+// }
+// }
+
+// function searchTitlesByLetter(currentTitle, searchInput, currentList) {
+//   for (var i = 0; i < searchInput.length + 1; i++) {
+//     var urgentButton = document.querySelector('.filter-by-urgency-button')
+//     var currentDiv = document.querySelector(`.task-card-id${currentList.id}`)
+//     if (searchInput.length < 2) {
+//       if (urgentButton.classList.contains('filter-by-urgency-button-active')) {
+//         searchByUrgency(currentTitle, searchInput, currentList)
+//       } else if (searchInput[i - 1] == currentTitle[i - 1]) {
+//         currentDiv.classList.remove('hide')
+//       } else {
+//         currentDiv.classList.add('hide')
+//       }
+//     } else if (searchInput.length > 2) {
+//         if (urgentButton.classList.contains('filter-by-urgency-button-active')) {
+//           searchByUrgency(currentTitle, searchInput, currentList)
+//         } else if ((searchInput[i - 1] == currentTitle[i - 1]) && (searchInput[i] == currentTitle[i])) {
+//           currentDiv.classList.remove('hide')
+//         } else {
+//           currentDiv.classList.add('hide')
+//         }
+//       }
+//     }
+//   }
+
+
+
+  function filterByUrgency() {
+    console.log(allToDoLists)
+    var noUrgentMessage = document.querySelector('.no-urgent-message')
+    noUrgentMessage.classList.add('hide')
+    var urgentButton = document.querySelector('.filter-by-urgency-button')
+    urgentButton.classList.toggle('filter-by-urgency-button-active')
+    var allToDoListsFalseCounter = 0;
+    for (var i = 0; i < allToDoLists.length; i++) {
+      var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
+      if ((allToDoLists[i].urgent == false) && (urgentButton.classList.contains('filter-by-urgency-button-active'))) {
+        allToDoListsFalseCounter++;
+        currentDiv.classList.add('hide')
+      } else if ((allToDoLists[i].urgent == false) && (urgentButton.classList.contains('filter-by-urgency-button'))) {
+        currentDiv.classList.remove('hide')
+      }
+    }
+    console.log(allToDoListsFalseCounter)
+    if (allToDoListsFalseCounter === allToDoLists.length) {
+      displayNothingUrgentMessage()
+    }
+  }
+
+
+
+  function displayNothingUrgentMessage() {
+    console.log('no urgency!')
+    var noUrgentMessage = document.querySelector('.no-urgent-message')
+    noUrgentMessage.classList.remove('hide')
+  }
