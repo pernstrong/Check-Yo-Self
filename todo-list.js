@@ -1,5 +1,3 @@
-// each todo list on the page should be created from this class
-console.log('todo-list.js')
 class ToDoList {
   constructor(id, title, tasks, urgent) {
     this.id = id;
