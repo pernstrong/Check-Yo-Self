@@ -92,8 +92,8 @@ function findListToUpdateTaskComplete(event) {
     }
   }
 
-// finds correct list in data model to update when task clicked
-function findListInArrayToUpdate(currentListToUpdateIndex, taskId, selectedDiv) {
+  // finds correct list in data model to update when task clicked
+  function findListInArrayToUpdate(currentListToUpdateIndex, taskId, selectedDiv) {
     currentListToUpdate = allToDoLists[currentListToUpdateIndex]
     currentListToUpdate.updateTask(taskId, selectedDiv)
     updateDomTaskComplete(taskId, selectedDiv)
