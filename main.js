@@ -20,10 +20,8 @@ function routeAsideFunctions(event) {
   if (event.target.classList.contains('add-task-item-button-image')) {
     checkTaskInputValue()
   } else if (event.target.classList.contains('make-task-list-button')) {
-    // console.log('createNewTask!')
     checkTitleInputValue()
   } else if (event.target.classList.contains('clear-all-button')) {
-    // console.log('clearAll!')
     clearTasksOnAside(event)
   } else if (event.target.classList.contains('filter-by-urgency-button')) {
     console.log('filterByUrgency!')
@@ -50,37 +48,32 @@ function checkTitleInputValue() {
 }
 
 function routeListFunctions(event) {
-  // console.log(event.target)
   if (event.target.classList.contains('task-input')) {
     findListToUpdateTaskComplete(event)
   } else if (event.target.classList.contains('task-card-urgent-button')) {
     findListToUpdateUrgency(event)
   } else if (event.target.classList.contains('task-card-delete-button')) {
-    // console.log('delete')
     findListToDelete(event);
   }
-  }
+}
 
-  function findListToDelete(event) {
-    var taskId = event.target.dataset.id
-    var selectedDiv = event.target.closest('.task-card')
-    // console.log(selectedDiv)
-    // console.log(taskId)
-    for (var i = 0; i < allToDoLists.length; i++) {
-      if (taskId == allToDoLists[i].id) {
-        allToDoLists[i].deleteFromStorage(i, selectedDiv)
-      }
+function findListToDelete(event) {
+  var taskId = event.target.dataset.id
+  var selectedDiv = event.target.closest('.task-card')
+  for (var i = 0; i < allToDoLists.length; i++) {
+    if (taskId == allToDoLists[i].id) {
+      allToDoLists[i].deleteFromStorage(i, selectedDiv)
     }
-
   }
+}
 
 function findListToUpdateUrgency(event) {
   var taskId = event.target.dataset.id
   var selectedDiv = event.target.closest('.task-card')
-  // console.log(taskId)
   for (var i = 0; i < allToDoLists.length; i++) {
     if (taskId == allToDoLists[i].id) {
       allToDoLists[i].updateToDo(selectedDiv)
+      updateDomUrgency(selectedDiv, allToDoLists[i].id)
     }
   }
 }
@@ -99,10 +92,23 @@ function findListToUpdateTaskComplete(event) {
 
   function findListInArrayToUpdate(currentListToUpdateIndex, taskId, selectedDiv) {
     currentListToUpdate = allToDoLists[currentListToUpdateIndex]
-    // console.log(currentListToUpdate)
     currentListToUpdate.updateTask(taskId, selectedDiv)
+    updateDomTaskComplete(taskId, selectedDiv)
+    changeDeletePicture(currentListToUpdate, selectedDiv)
   }
 }
+
+function changeDeletePicture(currentListToUpdate, selectedDiv) {
+  var deleteButton = document.querySelector(`.delete-image${currentListToUpdate.id}`)
+  deleteButton.src = 'assets/images/delete.svg'
+  for (var i = 0; i < currentListToUpdate.tasks.length; i++) {
+    if (currentListToUpdate.tasks[i].complete == false) {
+      return
+    }
+  }
+  deleteButton.src = 'assets/images/delete-active.svg'
+}
+
 
 function createToDoList() {
   currentTasksString = JSON.stringify(currentTasks)
@@ -118,7 +124,6 @@ function createToDoList() {
 function createTask() {
   numberOfTasks++
   var task = new Task(Date.now(), `${taskItem.value}`);
-  // console.log(task.id)
   currentTasks.push(task);
   displayTaskOnAside()
   taskItem.value = '';
@@ -165,8 +170,8 @@ function displayList(currentList, i) {
     targetColumn = columnTwo;
   }
   if (toDoList.urgent === false) {
-  targetColumn.insertAdjacentHTML('afterbegin',
-    `<div class="task-card task-card-id${toDoList.id}">
+    targetColumn.insertAdjacentHTML('afterbegin',
+      `<div class="task-card task-card-id${toDoList.id}">
         <h4 class="task-card-title">${toDoList.title}</h4>
         <ul class="task-card-list${toDoList.id} task-card-list" data-id="${toDoList.id}">
         </ul>
@@ -175,11 +180,12 @@ function displayList(currentList, i) {
           <p>URGENT</p>
         </section>
         <section class="delete-button-section">
-        <input type="image" src="assets/images/delete.svg" class="task-card-delete-button" data-id="${toDoList.id}">
+        <input type="image" src="assets/images/delete.svg" class="task-card-delete-button delete-image${toDoList.id}" data-id="${toDoList.id}">
         <p>DELETE</p>
         </section>
       </div>`
-  )} else {
+    )
+  } else {
     targetColumn.insertAdjacentHTML('afterbegin',
       `<div class="task-card task-card-id${toDoList.id} urgent-card-active">
           <h4 class="task-card-title">${toDoList.title}</h4>
@@ -190,15 +196,14 @@ function displayList(currentList, i) {
             <p>URGENT</p>
           </section>
           <section class="delete-button-section">
-          <input type="image" src="assets/images/delete.svg" class="task-card-delete-button" data-id="${toDoList.id}">
+          <input type="image" src="assets/images/delete.svg" class="task-card-delete-button delete-image${toDoList.id}" data-id="${toDoList.id}">
           <p>DELETE</p>
           </section>
         </div>`
-)
+    )
   }
   displayTasksInCards(currentList);
 }
-
 
 function displayTasksInCards(currentList) {
   taskCardList = document.querySelector(`.task-card-list${currentList.id}`)
@@ -215,20 +220,14 @@ function displayTasksInCards(currentList) {
   currentTasks = []
 }
 
-
 function loadFromStorage() {
-  // console.log(allToDoLists)
   var listsFromStorage = JSON.parse(localStorage.getItem('allToDoLists'))
-  // allToDoLists = listsFromStorage
-  // console.log(listsFromStorage)
   if (listsFromStorage === null) {
     return
   } else {
     for (var i = 0; i < listsFromStorage.length; i++) {
       var toDoList = new ToDoList(listsFromStorage[i].id, listsFromStorage[i].title, listsFromStorage[i].tasks, listsFromStorage[i].urgent);
-      // console.log(toDoList)
       allToDoLists.push(toDoList)
-      // console.log(allToDoLists)
     }
   }
   if (allToDoLists === null) {
@@ -248,31 +247,19 @@ function formatListsToDisplay() {
 function displayTasksFromStorage(currentList) {
   taskCardList = document.querySelector(`.task-card-list${currentList.id}`)
   taskCardList.innerHTML = ''
-  // taskIndArray = currentList.tasks
-  // taskIndArray = JSON.parse(currentList.tasks)
   for (var i = 0; i < currentList.tasks.length; i++) {
     var task = currentList.tasks[i]
-    // console.log(task)
     if (task.complete === true) {
       taskCardList.insertAdjacentHTML('beforeend',
-      `<li class="list-item list-item-active"><input type="image" src="assets/images/checkbox-active.svg" data-id="${task.id}" class="task-input task-input${task.id}">${task.objective}</li>
-      `
-    )
+        `<li class="list-item list-item-active"><input type="image" src="assets/images/checkbox-active.svg" data-id="${task.id}" class="task-input task-input${task.id}">${task.objective}</li>`
+      )
     } else {
-    taskCardList.insertAdjacentHTML('beforeend',
-      `<li class="list-item"><input type="image" src="assets/images/checkbox.svg" data-id="${task.id}" class="task-input task-input${task.id}">${task.objective}</li>
-    `
-    )
-    // markTasksCompleteFromStorage(task)
+      taskCardList.insertAdjacentHTML('beforeend',
+        `<li class="list-item"><input type="image" src="assets/images/checkbox.svg" data-id="${task.id}" class="task-input task-input${task.id}">${task.objective}</li>`
+      )
+    }
   }
 }
-}
-
-// function markTasksCompleteFromStorage(task) {
-//   if (task.complete == true) {
-//
-//   }
-// }
 
 function deleteFromDom(i, selectedDiv) {
   selectedDiv.classList.add('hide')
@@ -291,29 +278,19 @@ function updateDomUrgency(selectedDiv, id) {
 }
 
 function updateDomTaskComplete(taskId, selectedDiv) {
-  // console.log('update dom!')
-  // console.log(selectedDiv)
   var taskButton = document.querySelector(`.task-input${taskId}`)
-  // console.log(taskButton)
   if (taskButton.getAttribute('src') == "assets/images/checkbox.svg") {
     taskButton.src = "assets/images/checkbox-active.svg"
   } else {
     taskButton.src = "assets/images/checkbox.svg"
   }
   var listItem = taskButton.closest('.list-item')
-  // console.log(listItem)
   listItem.classList.toggle('list-item-active')
 }
 
 function searchTitles() {
-  // console.log('search!')
-  // console.log(allToDoLists)
-  // debugger
-
   searchInput = search.value
-  // console.log(searchInput.length)
   var urgentButton = document.querySelector('.filter-by-urgency-button')
-
   for (var i = 0; i < allToDoLists.length; i++) {
     var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
     var currentTitle = allToDoLists[i].title
@@ -321,20 +298,10 @@ function searchTitles() {
     if ((searchInput == '') && (allToDoLists[i].urgent === false) && (urgentButton.classList.contains('filter-by-urgency-button-active'))) {
       currentDiv.classList.add('hide')
     } else if (searchInput === '') {
-       removeAllHides()
-      // loadFromStorage()
+      removeAllHides()
     } else {
       searchTitlesByLetter(currentTitle, searchInput, allToDoLists[i])
-  }
-  // console.log(searchInput)
-}
-}
-
-function removeAllHides() {
-  // console.log('remove!')
-  for (var i = 0; i < allToDoLists.length; i++) {
-    var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
-    currentDiv.classList.remove('hide')
+    }
   }
 }
 
@@ -342,21 +309,22 @@ function searchTitlesByLetter(currentTitle, searchInput, currentList) {
   for (var i = 0; i < searchInput.length + 1; i++) {
     var urgentButton = document.querySelector('.filter-by-urgency-button')
     var currentDiv = document.querySelector(`.task-card-id${currentList.id}`)
-    // console.log(currentTitle)
-    // console.log(searchInput[i-1])
-    // console.log(currentTitle[i-1])
     if (urgentButton.classList.contains('filter-by-urgency-button-active')) {
       searchByUrgency(currentTitle, searchInput, currentList)
-    } else if (searchInput[i-1] == currentTitle[i-1]) {
+    } else if (searchInput[i - 1] == currentTitle[i - 1]) {
       currentDiv.classList.remove('hide')
     } else {
       currentDiv.classList.add('hide')
-      // formatListsToDisplay()
     }
   }
-  // loadFromStorage()
 }
 
+function removeAllHides() {
+  for (var i = 0; i < allToDoLists.length; i++) {
+    var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
+    currentDiv.classList.remove('hide')
+  }
+}
 
 function filterByUrgency() {
   console.log(allToDoLists)
@@ -381,70 +349,20 @@ function filterByUrgency() {
 }
 
 function searchByUrgency(currentTitle, searchInput, currentList) {
-  // var urgentButton = document.querySelector('.filter-by-urgency-button')
-  // if (urgentButton.classList.contains('filter-by-urgency-button-active')) {
-      for (var i = 0; i < searchInput.length + 1; i++) {
-        var currentDiv = document.querySelector(`.task-card-id${currentList.id}`)
-        if (currentList.urgent === false) {
-          console.log('dont search me')
-        } else if (searchInput[i-1] == currentTitle[i-1]) {
-          currentDiv.classList.remove('hide')
-        } else {
-          currentDiv.classList.add('hide')
-          // formatListsToDisplay()
-        }
-      }
-      // loadFromStorage()
+  for (var i = 0; i < searchInput.length + 1; i++) {
+    var currentDiv = document.querySelector(`.task-card-id${currentList.id}`)
+    if (currentList.urgent === false) {
+      console.log('dont search me')
+    } else if (searchInput[i - 1] == currentTitle[i - 1]) {
+      currentDiv.classList.remove('hide')
+    } else {
+      currentDiv.classList.add('hide')
     }
-
-
+  }
+}
 
 function displayNothingUrgentMessage() {
   console.log('no urgency!')
   var noUrgentMessage = document.querySelector('.no-urgent-message')
   noUrgentMessage.classList.remove('hide')
 }
-
-
-
-// function filterByUrgency() {
-//   console.log(allToDoLists)
-//   var urgentButton = document.querySelector('.filter-by-urgency-button')
-//   urgentButton.classList.toggle('filter-by-urgency-button-active')
-//   var allToDoListsFalseCounter = 0;
-//   for (var i = 0; i < allToDoLists.length; i++) {
-//     allToDoListsFalseCounter++;
-//     var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
-//     if (allToDoLists[i].urgent == false) {
-//       currentDiv.classList.toggle('hide')
-//     }
-//   }
-// }
-//
-// function reDisplayLists() {
-//   // main.innerHTML = ''
-//   console.log(allToDoLists)
-//   for (var i = 0; i < allToDoLists.length; i++) {
-//     displayList(allToDoLists[i])
-//   }
-// }
-
-
-// function searchTitlesByLetter(currentTitle, searchInput, currentList) {
-//   for (var i = 0; i < searchInput.length; i++) {
-//     if (searchInput[i] == currentTitle[i]) {
-//       console.log(currentList)
-//       searchLists.push(currentList)
-//       main.innerHTML = ''
-//       displaySearchLists(searchLists)
-//     }
-//     console.log(searchLists)
-//   }
-//   searchLists = [];
-// }
-//
-// function displaySearchLists(searchLists) {
-//   for (var i = 0; i < searchLists.length; i++) {
-//     display(searchLists[i])
-//   }
-// }
