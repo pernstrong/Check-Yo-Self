@@ -23,4 +23,4 @@ The biggest challenge I came across during this project was objects behaving wei
 I feel that this entire project has been a win for me. The amount I learned over the past 5 weeks is incredible and I feel I was able to display most of it within this project. On the first Solo project I spent hours struggling with CSS. This time around it was not easy but I was much more efficient and utilized many tools and skills that I did not have before. While my JavaScript is far from good, I am proud of how far I have come since really using a lot of JavaScript in my second project, Intention Timer. On this project I actively thought while writing the functions if they followed SRP and DRY. Admittingly, I was not perfect and there are plenty of examples of how I could have refractored better, I am much more aware of these and have tried to fix them. 
 
 ### Screenshots of comp and your app
-![alt text] (Desktop/Screen Shot 2020-03-03 at 11.12.58 AM.png)
+![alt text] (https://frontend.turing.io/assets/images/projects/check-yo-self/check-yo-self-02.jpg)
