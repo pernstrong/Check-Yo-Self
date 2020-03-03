@@ -389,7 +389,7 @@ function filterByUrgency() {
   }
 }
 
-// displays a message when nothing is urgent
+// displays a message when nothing is urgent...
 function displayNothingUrgentMessage() {
   var noUrgentMessage = document.querySelector('.no-urgent-message')
   noUrgentMessage.classList.remove('hide')
