@@ -115,7 +115,6 @@ function changeDeletePicture(currentListToUpdate, selectedDiv) {
 
 // instantiates a new toDoList from ToDoList class
 function createToDoList() {
-  var urgent;
   currentTasksString = JSON.stringify(currentTasks)
   var toDoList = new ToDoList(Date.now(), `${toDoTitle.value}`, `${currentTasksString}`);
   allToDoLists.push(toDoList)
@@ -123,6 +122,7 @@ function createToDoList() {
   toDoList.formatTasks();
   toDoList.saveToStorage();
   displayListFindColumns(currentList);
+
   toDoTitle.value = '';
 }
 
@@ -205,6 +205,7 @@ function displayList(toDoList, targetColumn) {
   var currentUL = document.querySelector(`.task-card-list${toDoList.id}`)
   keepUrgency(toDoList, urgentImage, currentDiv, currentUL)
   changeDeletePicture(toDoList, currentDiv)
+  displayTasksInCards(toDoList)
 }
 
 // adds urgency picture and colors upon refresh of page
