@@ -1,19 +1,18 @@
+// all global variables
 var toDoTitle = document.querySelector('.task-title-input')
 var taskItem = document.querySelector('.task-item-input')
 var aside = document.querySelector('.aside')
 var main = document.querySelector('.main')
 var search = document.querySelector('.search-input')
-// var numberOfLists = -1;
-// var numberOfTasks = -1;
 var currentTasks = [];
 var allToDoLists = [];
-// var searchLists = [];
-
+// all event listeners
 window.addEventListener('load', loadFromStorage)
 aside.addEventListener('click', routeAsideFunctions)
 main.addEventListener('click', routeListFunctions)
 search.addEventListener('keyup', searchTitles)
 
+// routing function for EP on aside bar
 function routeAsideFunctions(event) {
   if (event.target.classList.contains('add-task-item-button-image')) {
     checkTaskInputValue()
@@ -28,22 +27,7 @@ function routeAsideFunctions(event) {
   }
 }
 
-function checkTaskInputValue() {
-  if (taskItem.value === '') {
-    return
-  } else {
-    createTask()
-  }
-}
-
-function checkTitleInputValue() {
-  if ((toDoTitle.value === '') || (currentTasks.length == 0)) {
-    return
-  } else {
-    createToDoList()
-  }
-}
-
+// routing function for EP on main
 function routeListFunctions(event) {
   if (event.target.classList.contains('task-input')) {
     findListToUpdateTaskComplete(event)
@@ -54,6 +38,25 @@ function routeListFunctions(event) {
   }
 }
 
+// prevents create task button from working with no input
+function checkTaskInputValue() {
+  if (taskItem.value === '') {
+    return
+  } else {
+    createTask()
+  }
+}
+
+// prevents create list  from working with no nput
+function checkTitleInputValue() {
+  if ((toDoTitle.value === '') || (currentTasks.length == 0)) {
+    return
+  } else {
+    createToDoList()
+  }
+}
+
+// finds the correct list when the delete button is clicked
 function findListToDelete(event) {
   var taskId = event.target.dataset.id
   var selectedDiv = event.target.closest('.task-card')
@@ -64,6 +67,7 @@ function findListToDelete(event) {
   }
 }
 
+// finds the correct list when urgency button is clicked
 function findListToUpdateUrgency(event) {
   var taskId = event.target.dataset.id
   var selectedDiv = event.target.closest('.task-card')
@@ -75,6 +79,7 @@ function findListToUpdateUrgency(event) {
   }
 }
 
+// finds correct list in dom to update when task is clicked
 function findListToUpdateTaskComplete(event) {
   var taskId = event.target.dataset.id
   var allTasks = event.target.closest('.task-card-list')
@@ -87,6 +92,7 @@ function findListToUpdateTaskComplete(event) {
     }
   }
 
+// finds correct list in data model to update when task clicked
 function findListInArrayToUpdate(currentListToUpdateIndex, taskId, selectedDiv) {
     currentListToUpdate = allToDoLists[currentListToUpdateIndex]
     currentListToUpdate.updateTask(taskId, selectedDiv)
@@ -95,6 +101,7 @@ function findListInArrayToUpdate(currentListToUpdateIndex, taskId, selectedDiv) 
   }
 }
 
+// changes delete button color/picture when all tasks are marked complete
 function changeDeletePicture(currentListToUpdate, selectedDiv) {
   var deleteButton = document.querySelector(`.delete-image${currentListToUpdate.id}`)
   deleteButton.src = 'assets/images/delete.svg'
@@ -106,6 +113,7 @@ function changeDeletePicture(currentListToUpdate, selectedDiv) {
   deleteButton.src = 'assets/images/delete-active.svg'
 }
 
+// instantiates a new toDoList from ToDoList class
 function createToDoList() {
   var urgent;
   currentTasksString = JSON.stringify(currentTasks)
@@ -118,14 +126,15 @@ function createToDoList() {
   toDoTitle.value = '';
 }
 
+// instantiates a new task from Task class
 function createTask() {
-  // numberOfTasks++
   var task = new Task(Date.now(), `${taskItem.value}`);
   currentTasks.push(task);
   displayTaskOnAside()
   taskItem.value = '';
 }
 
+//temporarily displays task on aside while creating them, before list is made
 function displayTaskOnAside() {
   asideTaskListArea = document.querySelector('.aside-task-list-area')
   asideTaskListArea.innerHTML = '';
@@ -137,12 +146,14 @@ function displayTaskOnAside() {
   }
 }
 
+// removes the task on the aside when clicked
 function deleteTaskOnAside(event) {
   buttonSelectedIndex = event.target.dataset.tasknum
   currentTasks.splice(buttonSelectedIndex, 1)
   displayTaskOnAside()
 }
 
+// clears all tasks and title on aside when clear button clicked
 function clearTasksOnAside(event) {
   asideTaskListArea = document.querySelector('.aside-task-list-area')
   asideTaskListArea.innerHTML = '';
@@ -151,6 +162,7 @@ function clearTasksOnAside(event) {
   currentTasks = [];
 }
 
+// alternates between the two columns to display each list
 function displayListFindColumns(currentList, i) {
   columnOne = document.querySelector('.column-one');
   columnTwo = document.querySelector('.column-two');
@@ -169,6 +181,7 @@ function displayListFindColumns(currentList, i) {
   displayList(toDoList, targetColumn)
 }
 
+// displays the list in the appropriate column
 function displayList(toDoList, targetColumn) {
   {
     targetColumn.insertAdjacentHTML('afterbegin',
@@ -191,13 +204,12 @@ function displayList(toDoList, targetColumn) {
   var currentDiv = document.querySelector(`.task-card-id${toDoList.id}`)
   var currentUL = document.querySelector(`.task-card-list${toDoList.id}`)
   keepUrgency(toDoList, urgentImage, currentDiv, currentUL)
+  changeDeletePicture(toDoList, currentDiv)
 }
 
+// adds urgency picture and colors upon refresh of page
 function keepUrgency(toDoList, urgentImage, currentDiv, currentUL) {
   if (toDoList.urgent == true) {
-    // var urgentImage = document.querySelector('.task-card-urgent-button')
-    // var currentDiv = document.querySelector('.task-card')
-    // var currentUL = document.querySelector('.task-card-list')
     urgentImage.src = "assets/images/urgent-active.svg"
     currentDiv.classList.add('urgent-card-active')
     currentUL.classList.add('task-card-list-active')
@@ -205,73 +217,7 @@ function keepUrgency(toDoList, urgentImage, currentDiv, currentUL) {
   }
 }
 
-
-// function displayList(currentList, i) {
-//   columnOne = document.querySelector('.column-one');
-//   columnTwo = document.querySelector('.column-two');
-//   noTaskMessage = document.querySelector('.no-task-message')
-//   var toDoList = currentList
-//   var indexOfList = allToDoLists.indexOf(currentList)
-//   var targetColumn;
-//   if (allToDoLists.length > 0) {
-//     noTaskMessage.innerHTML = ''
-//   }
-//   if (indexOfList % 2 === 0) {
-//     targetColumn = columnOne;
-//   } else {
-//     targetColumn = columnTwo;
-//   }
-//   if (toDoList.urgent === false) {
-//     targetColumn.insertAdjacentHTML('afterbegin',
-//       `<div class="task-card task-card-id${toDoList.id}">
-//         <h4 class="task-card-title">${toDoList.title}</h4>
-//         <ul class="task-card-list${toDoList.id} task-card-list" data-id="${toDoList.id}">
-//         </ul>
-//         <section class="urgent-button-section">
-//           <input type="image" src="assets/images/urgent.svg" class="task-card-urgent-button task-card-urgent-button${toDoList.id}" data-id="${toDoList.id}">
-//           <p>URGENT</p>
-//         </section>
-//         <section class="delete-button-section">
-//         <input type="image" src="assets/images/delete.svg" class="task-card-delete-button delete-image${toDoList.id}" data-id="${toDoList.id}">
-//         <p>DELETE</p>
-//         </section>
-//       </div>`
-//     )
-//   } else {
-//     targetColumn.insertAdjacentHTML('afterbegin',
-//       `<div class="task-card task-card-id${toDoList.id} urgent-card-active">
-//           <h4 class="task-card-title">${toDoList.title}</h4>
-//           <ul class="task-card-list${toDoList.id} task-card-list task-card-list-active" data-id="${toDoList.id}">
-//           </ul>
-//           <section class="urgent-button-section">
-//             <input type="image" src="assets/images/urgent-active.svg" class="task-card-urgent-button task-card-urgent-button${toDoList.id}" data-id="${toDoList.id}">
-//             <p>URGENT</p>
-//           </section>
-//           <section class="delete-button-section">
-//           <input type="image" src="assets/images/delete.svg" class="task-card-delete-button delete-image${toDoList.id}" data-id="${toDoList.id}">
-//           <p>DELETE</p>
-//           </section>
-//         </div>`
-//     )
-//   }
-//   displayTasksInCards(currentList);
-// }
-
-// function displayTasksInCards(currentList) {
-//   taskCardList = document.querySelector(`.task-card-list${currentList.id}`)
-//   taskCardList.innerHTML = ''
-//   for (var i = 0; i < currentTasks.length; i++) {
-//     var task = currentTasks[i]
-//     taskCardList.insertAdjacentHTML('beforeend',
-//       `<li class="list-item"><input type="image" src="assets/images/checkbox.svg" class="task-input task-input${currentTasks[i].id}" data-id="${currentTasks[i].id}">${task.objective}</li>
-//       `
-//     )
-//     asideTaskListArea = document.querySelector('.aside-task-list-area')
-//     asideTaskListArea.innerHTML = ''
-//   }
-//   currentTasks = []
-// }
-
+// displays the tasks within the correct list
 function displayTasksInCards(currentList) {
   taskCardList = document.querySelector(`.task-card-list${currentList.id}`)
   taskCardList.innerHTML = ''
@@ -290,12 +236,14 @@ function displayTasksInCards(currentList) {
   clearAsideTasks()
 }
 
+// clears aside inputs and currentTask array
 function clearAsideTasks() {
   asideTaskListArea = document.querySelector('.aside-task-list-area')
   asideTaskListArea.innerHTML = ''
   currentTasks = []
 }
 
+// retrieves the array of lists from local storage and instantiates new object instance
 function loadFromStorage() {
   var listsFromStorage = JSON.parse(localStorage.getItem('allToDoLists'))
   if (listsFromStorage === null) {
@@ -312,6 +260,7 @@ function loadFromStorage() {
   formatListsToDisplay()
 }
 
+// sends each list individually to be displayed
 function formatListsToDisplay() {
   for (var i = 0; i < allToDoLists.length; i++) {
     currentList = allToDoLists[i]
@@ -320,27 +269,12 @@ function formatListsToDisplay() {
   }
 }
 
-// function displayTasksFromStorage(currentList) {
-//   taskCardList = document.querySelector(`.task-card-list${currentList.id}`)
-//   taskCardList.innerHTML = ''
-//   for (var i = 0; i < currentList.tasks.length; i++) {
-//     var task = currentList.tasks[i]
-//     if (task.complete === true) {
-//       taskCardList.insertAdjacentHTML('beforeend',
-//         `<li class="list-item list-item-active"><input type="image" src="assets/images/checkbox-active.svg" data-id="${task.id}" class="task-input task-input${task.id}">${task.objective}</li>`
-//       )
-//     } else {
-//       taskCardList.insertAdjacentHTML('beforeend',
-//         `<li class="list-item"><input type="image" src="assets/images/checkbox.svg" data-id="${task.id}" class="task-input task-input${task.id}">${task.objective}</li>`
-//       )
-//     }
-//   }
-// }
-
+// deletes the selected div from the DOM when clicked
 function deleteFromDom(i, selectedDiv) {
   selectedDiv.classList.add('hide')
 }
 
+// updates the dom urgency with picture and colors
 function updateDomUrgency(selectedDiv, id) {
   selectedDiv.classList.toggle('urgent-card-active')
   var card = document.querySelector(`.task-card-list${id}`)
@@ -353,6 +287,7 @@ function updateDomUrgency(selectedDiv, id) {
   }
 }
 
+// updates the DOM task with font color, style and input picture
 function updateDomTaskComplete(taskId, selectedDiv) {
   var taskButton = document.querySelector(`.task-input${taskId}`)
   if (taskButton.getAttribute('src') == "assets/images/checkbox.svg") {
@@ -364,13 +299,13 @@ function updateDomTaskComplete(taskId, selectedDiv) {
   listItem.classList.toggle('list-item-active')
 }
 
+// search input will cause this function to start searching, finds a title and associated div one at a time and then sends to searchTitlesByLetter function
 function searchTitles() {
   searchInput = search.value
   var urgentButton = document.querySelector('.filter-by-urgency-button')
   for (var i = 0; i < allToDoLists.length; i++) {
     var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
     var currentTitle = allToDoLists[i].title
-
     if ((searchInput == '') && (urgentButton.classList.contains('filter-by-urgency-button-active'))) {
       removeUnurgentHides()
     } else if (searchInput == '') {
@@ -381,14 +316,13 @@ function searchTitles() {
   }
 }
 
+// searches titles individually, changed from by letter to use .includes
 function searchTitlesByLetter(currentTitle, searchInput, currentList) {
   for (var i = 0; i < searchInput.length; i++) {
     var urgentButton = document.querySelector('.filter-by-urgency-button')
     var currentDiv = document.querySelector(`.task-card-id${currentList.id}`)
     if (urgentButton.classList.contains('filter-by-urgency-button-active')) {
-
       searchByUrgency(currentTitle, searchInput, currentList)
-
     } else if (currentTitle.includes(searchInput)) {
       currentDiv.classList.remove('hide')
     } else {
@@ -397,6 +331,7 @@ function searchTitlesByLetter(currentTitle, searchInput, currentList) {
   }
 }
 
+// if urgent button is active, only searches through lists marked urgent
 function searchByUrgency(currentTitle, searchInput, currentList) {
   for (var i = 0; i < searchInput.length; i++) {
     var currentDiv = document.querySelector(`.task-card-id${currentList.id}`)
@@ -412,6 +347,7 @@ function searchByUrgency(currentTitle, searchInput, currentList) {
   }
 }
 
+// removes the hide class from all lists/divs
 function removeAllHides() {
   for (var i = 0; i < allToDoLists.length; i++) {
     var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
@@ -419,6 +355,7 @@ function removeAllHides() {
   }
 }
 
+// removes hide class from urgent lists/divs, used when filter by urgency button is active
 function removeUnurgentHides() {
   for (var i = 0; i < allToDoLists.length; i++) {
     var currentDiv = document.querySelector(`.task-card-id${allToDoLists[i].id}`)
@@ -430,6 +367,7 @@ function removeUnurgentHides() {
   }
 }
 
+// displays only urgent tasks when filter by urgency button is active
 function filterByUrgency() {
   var noUrgentMessage = document.querySelector('.no-urgent-message')
   noUrgentMessage.classList.add('hide')
@@ -450,6 +388,7 @@ function filterByUrgency() {
   }
 }
 
+// displays a message when nothing is urgent
 function displayNothingUrgentMessage() {
   var noUrgentMessage = document.querySelector('.no-urgent-message')
   noUrgentMessage.classList.remove('hide')
