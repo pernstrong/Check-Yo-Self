@@ -1,5 +1,3 @@
-console.log('task.js')
-
 class Task {
   constructor(id, objective) {
     this.id = id;

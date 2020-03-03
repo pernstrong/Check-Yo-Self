@@ -3,24 +3,25 @@
 <head>
   <title>Check Yo' Self</title>
   <link href="styles.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
-    <h1 class="title-white">CHECK</h1>
+    <h1 class="title-white title-white-first">CHECK</h1>
     <h1 class="title-yellow">YO'</h1>
     <h1 class="title-white">SELF</h1>
-    <button class="search-button">
+    <section class="search-image">
       <img src="assets/images/search.svg">
-    </button>
+    </section>
     <input type="text" placeholder="Search" class="search-input">
   </header>
   <aside class="aside">
     <section class="aside-top">
-      <p>Task Title</p>
+      <h5>Task Title</h5>
       <input type="text" class="task-title-input">
       <div class="aside-task-list-area">
       </div>
-      <p>Task Item</p>
+      <h5>Task Item</h5>
       <section class="task-item-input-section">
         <input type="text" class="task-item-input">
         <input type="image" class="add-task-item-button-image" src="assets/images/plus-sign.png">
@@ -36,22 +37,6 @@
     <section class="column-one">
       <h2 class="no-task-message">Create a new To Do...</h2>
       <h2 class="no-urgent-message hide">Get a sense of urgency!</h2>
-      <div class="task-card urgent-card-active hide">
-        <h4 class="task-card-title">Task Title</h4>
-        <ul class="task-card-list task-card-list-active">
-          <li><input type="image" src="assets/images/checkbox.svg" class="task-input-active">Don't ever play yourself.</li>
-          <li><input type="image" src="assets/images/checkbox.svg">Every chance I get, I water the plants</li>
-          <li><input type="image" src="assets/images/checkbox.svg">Lion! Cloth talk</li>
-        </ul>
-        <section class="urgent-button-section urgent-button-section-active">
-          <input type="image" src="assets/images/urgent.svg" class="task-card-urgent-button">
-          <p>URGENT</p>
-        </section>
-        <section class="delete-button-section">
-          <input type="image" src="assets/images/delete.svg" class="task-card-delete-button">
-          <p>DELETE</p>
-        </section>
-      </div>
     </section>
     <section class="column-two">
     </section>

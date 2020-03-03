@@ -30,22 +30,34 @@ input {
   outline: none;
 }
 
-header button {
+.search-image {
   position: absolute;
   right: 26.3%;
   top: 2.1%;
-  width: 3.65%;
+  width: 2.0%;
+  padding: 5px;
+  background-color: lightgray;
 }
 
 .title-white {
   color: #FFFFFF;
   display: inline-block;
+  font-family: 'Open Sans', sans-serif;
   font-size: 32px;
+  /* font-weight: bold; */
+}
+
+.title-white-first {
+  margin-left: 1.5%;
+  /* font-weight: bold; */
 }
 
 .title-yellow {
   color: #FFC30C;
   display: inline-block;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 32px;
+  /* font-weight: bold; */
 }
 
 .search-input {
@@ -56,17 +68,21 @@ aside {
   background-color: #587A8A;
   border: 2px solid #3C6577;
   float: left;
-  height: 750px;
+  font-family: 'Open Sans', sans-serif;
+  height: 2000px;
   width: 33%;
 }
 
-aside p {
+aside h5 {
   color: #FFFFFF;
+  color: #F3F6F7;
+  font-size: 18px;
   margin: 5% 0% 2% 3%;
 }
 
 aside input {
   border: 2px solid #1F1F3D;
+  font-family: 'Open Sans', sans-serif;
   font-size: 32px;
   margin: 0% 5% 0% 3%;
   width: 90%;
@@ -83,6 +99,7 @@ aside input {
   font-size: 24px;
   list-style: none;
   margin: 3% 5%;
+  /* font-family: 'Open Sans', sans-serif; */
 }
 
 .task-item-input-section {
@@ -125,12 +142,13 @@ aside button {
 
 main {
   columns: 2;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .column-one {
   background-color: #F3F6F7;
   height: 100%;
-  height: 5000px;
+  height: 2000px;
   padding-top: 1%;
 }
 
@@ -143,7 +161,7 @@ main {
 .column-two {
   background-color: #F3F6F7;
   height: 100%;
-  height: 5000px;
+  height: 2000px;
   padding-top: 1%;
 }
 
