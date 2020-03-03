@@ -3,6 +3,7 @@ body {
   margin: 0%;
 }
 
+/* hide from the DOM */
 .hide {
   display: none;
 }
@@ -21,43 +22,46 @@ header input {
   width: 25%;
 }
 
+/* all buttons hover state and remove blue outline */
 button {
   cursor: pointer;
   outline: none;
 }
 
+/* all inputs remove blue outline */
 input {
   outline: none;
 }
 
+/* image next to search bar...only one I had to do position absolute :( */
 .search-image {
+  background-color: lightgray;
+  padding: 5px;
   position: absolute;
   right: 26.3%;
   top: 2.1%;
   width: 2.0%;
-  padding: 5px;
-  background-color: lightgray;
 }
 
+/* title white characters */
 .title-white {
   color: #FFFFFF;
   display: inline-block;
   font-family: 'Open Sans', sans-serif;
   font-size: 32px;
-  /* font-weight: bold; */
 }
 
+/* added margin to push away from edge of page */
 .title-white-first {
   margin-left: 1.5%;
-  /* font-weight: bold; */
 }
 
+/* title yellow characters */
 .title-yellow {
   color: #FFC30C;
   display: inline-block;
   font-family: 'Open Sans', sans-serif;
   font-size: 32px;
-  /* font-weight: bold; */
 }
 
 .search-input {
@@ -94,12 +98,12 @@ aside input {
   width: 4%;
 }
 
+/* tasks dipslay in list on aside */
 .aside-task-list-area li {
   color: #FFFFFF;
   font-size: 24px;
   list-style: none;
   margin: 3% 5%;
-  /* font-family: 'Open Sans', sans-serif; */
 }
 
 .task-item-input-section {
@@ -112,11 +116,13 @@ aside input {
   width: 78%;
 }
 
+/* plus sign image for adding a task */
 .add-task-item-button-image {
   margin: 0%;
   width: 10%;
 }
 
+/* aside buttons */
 aside button {
   background-color: #1F1F3D;
   border: #1F1F3D;
@@ -129,11 +135,13 @@ aside button {
   width: 90%;
 }
 
+/* bottom portion of aside, for filter by urgency button */
 .aside-bottom {
   border-top: 2px solid #3C6577;
   margin-top: 5%;
 }
 
+/* active state for filter by urgency button */
 .filter-by-urgency-button-active {
   background-color: #EF4A23;
   border: 2px solid #782616;
@@ -145,6 +153,7 @@ main {
   font-family: 'Open Sans', sans-serif;
 }
 
+/* left side of main */
 .column-one {
   background-color: #F3F6F7;
   height: 100%;
@@ -152,12 +161,14 @@ main {
   padding-top: 1%;
 }
 
+/* messages to dispaly in main when no tasks or no urgent tasks */
 .no-task-message,
 .no-urgent-message {
   color: #1F1F3D;
   margin: 10% 0% 0% 5%;
 }
 
+/* right side of main */
 .column-two {
   background-color: #F3F6F7;
   height: 100%;
@@ -169,6 +180,7 @@ main {
   font-size: 48px;
 }
 
+/* lists area*/
 .task-card {
   background-color: #FAFDFF;
   border: 2px solid #C7D3D8;
