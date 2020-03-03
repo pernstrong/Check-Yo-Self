@@ -109,7 +109,6 @@ function changeDeletePicture(currentListToUpdate, selectedDiv) {
   deleteButton.src = 'assets/images/delete-active.svg'
 }
 
-
 function createToDoList() {
   currentTasksString = JSON.stringify(currentTasks)
   var toDoList = new ToDoList(Date.now(), `${toDoTitle.value}`, `${currentTasksString}`);
